@@ -43,7 +43,7 @@ export const signup=async (req,res)=>{
         //if we have new user
         if(newUser){
             //generate jwt token 
-            generateToken(newUser,res)
+            generateToken(newUser._id,res)
 
             //save new user afteer generating jwt token 
             await newUser.save()
@@ -83,7 +83,7 @@ export const login=async (req,res)=>{
             return res.status(400).json({message:"Invalid credentials"}) 
         }
         //
-        generateToken(user,res)
+        generateToken(user._id,res)
 
          res.status(200).json({
             _id:user._id,
@@ -112,6 +112,7 @@ export const logout=(req,res)=>{
     }
 }
 
+//update profile 
 export const updateProfile=async (req,res)=>{
     try {
         const {profilePic}=req.body
@@ -132,12 +133,11 @@ export const updateProfile=async (req,res)=>{
 }
 
 //
-export const checkAuth=()=>{
+export const checkAuth = (req,res) => {
     try {
-        res.status(200).json(req.user)
+        res.status(200).json(req.user);
     } catch (error) {
-        console.log("error in checkauth controller:",error.message)
-        return res.status(500).json({message:"Internal server error"}) 
-
+        console.log("error in checkauth controller:", error.message);
+        return res.status(500).json({ message: "Internal server error" });
     }
 }
