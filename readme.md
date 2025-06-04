@@ -289,6 +289,66 @@ this will help with the ui of <Chatcontainer/>
 
 36. THIS IS WHERE THE SOCKET.IO part starts 
 
+    Create a socket.js file in the bacckend in the lib folder 
+
+    lib>socket.js 
+
+    copy the code init 
+
+37. intstall socket.io for frontend 
+
+    npm install socket.io-client 
+
+
+THE PROJECT IS NOW COMPLETE. TIME TO MAKE IT PRODUCTION READY
+
+HERE IS HOW. 
+
+1. we will tak the react app and serve it undeer the same domaon as the backennd
+
+2. create a package.json file in the base folder 
+
+    npm init -y
+
+3. Chnage the sxripts in package.json file in the backend folder to this 
+
+     "scripts": {
+    "dev": "nodemon src/index.js",
+    "start":"node src/index.js"
+    },
+
+4. Chnage the scripts in package.json file in rootfolder to this 
+
+     "scripts": {
+    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+     "start": "npm run start --prefix backend"
+    },
+
+5. Now if you delete the nodde modules and run npm run build you will see a dist folder in the frontend 
+
+6. add this tothe index.js file in backend 
+
+    import path from "path";
+
+    const __dirname = path.resolve();
+
+    if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+    });
+    }
+
+7. change the baseurl in axios.js to this 
+
+    baseURL: import.meta.env.MODE === "development" ? "http://localhost:(your backend port number)/api" : "/api",   
+
+8. Also chnage the base url in useAuthStore.js to this 
+
+    const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:(your backend port number)" : "/";
+
+
 
 
 
