@@ -78,7 +78,7 @@ export const useAuthStore=create((set,get)=>({
 
     logout: async()=>{
         try {
-            await axiosInstance.post("auth/logout")
+            await axiosInstance.post("/auth/logout")
             set({authUser:null})
             toast.success("Logged out succesfully ")
             //cll disconnect socket
@@ -107,7 +107,9 @@ export const useAuthStore=create((set,get)=>({
   //connect socket 
   connectSocket: () => {
     const { authUser } = get();
-    if (!authUser || get().socket?.connected) return;
+   if (!authUser || get().socket?.connected) return;
+    // if (!authUser || get().socket) return;
+
 
     const socket = io(BASE_URL, {
       query: {
