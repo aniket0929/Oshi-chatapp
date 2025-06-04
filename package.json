@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/aniket0929/Oshi-chatapp#readme",
   "dependencies": {
-    "express": "^4.21.2"
+
   }
 }
